@@ -22,7 +22,7 @@ import com.kruize.optimizer.model.kruize.KruizeProfile;
 import com.kruize.optimizer.utils.OptimizerConstants.MessageConstants;
 import com.kruize.optimizer.utils.OptimizerConstants.ProfileType;
 import com.kruize.optimizer.utils.OptimizerConstants.ProfilePathConstants;
-import com.kruize.optimizer.utils.OptimizerConstants.ProfileResponseConstants;
+import com.kruize.optimizer.utils.ProfileResponseConstants;
 import jakarta.ws.rs.core.Response;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -210,21 +210,21 @@ public class ProfileService {
                 if (!installedNames.contains(profileName)) {
                     try {
                         installProfile(profileType, profileName, profileVersion);
-                        results.add(MessageConstants.PROFILE_INSTALL_RESULT_INSTALLED + profileName);
-                        LOG.info(MessageConstants.PROFILE_INSTALLED_SUCCESS + profileName);
+                        results.add(String.format(MessageConstants.PROFILE_INSTALL_RESULT_INSTALLED, profileName));
+                        LOG.info(String.format(MessageConstants.PROFILE_INSTALLED_SUCCESS, profileName));
                     } catch (Exception e) {
-                        String error = MessageConstants.PROFILE_INSTALL_RESULT_FAILED + profileName + ": " + e.getMessage();
+                        String error = String.format(MessageConstants.PROFILE_INSTALL_RESULT_FAILED, profileName, e.getMessage());
                         results.add(error);
                         LOG.error(error, e);
                     }
                 } else {
-                    results.add(MessageConstants.PROFILE_INSTALL_RESULT_ALREADY_INSTALLED + profileName);
+                    results.add(String.format(MessageConstants.PROFILE_INSTALL_RESULT_ALREADY_INSTALLED, profileName));
                 }
             }
 
         } catch (Exception e) {
             LOG.error(MessageConstants.ERROR_INSTALLING_PROFILES, e);
-            results.add(MessageConstants.PROFILE_INSTALL_RESULT_ERROR + e.getMessage());
+            results.add(String.format(MessageConstants.PROFILE_INSTALL_RESULT_ERROR, e.getMessage()));
         }
 
         return results;
@@ -252,10 +252,10 @@ public class ProfileService {
                     kruizeClient.createLayer(profileDefinition);
                     break;
                 default:
-                    throw new IllegalArgumentException(MessageConstants.ERROR_UNKNOWN_PROFILE_TYPE + profileType);
+                    throw new IllegalArgumentException(String.format(MessageConstants.ERROR_UNKNOWN_PROFILE_TYPE, profileType));
             }
         } catch (Exception e) {
-            throw new RuntimeException(MessageConstants.ERROR_FAILED_TO_INSTALL_PROFILE + profileName, e);
+            throw new RuntimeException(String.format(MessageConstants.ERROR_FAILED_TO_INSTALL_PROFILE, profileName), e);
         }
     }
 
@@ -270,16 +270,16 @@ public class ProfileService {
     private Object loadProfileFromLocal(String profileType, String profileName, String profileVersion) {
         try {
             String resourcePath = getResourcePath(profileType, profileName, profileVersion);
-            LOG.info(MessageConstants.INFO_LOADING_PROFILE_FROM + resourcePath);
+            LOG.info(String.format(MessageConstants.INFO_LOADING_PROFILE_FROM, resourcePath));
             
             try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath)) {
                 if (inputStream == null) {
-                    throw new RuntimeException(MessageConstants.PROFILE_NOT_FOUND + ": " + resourcePath);
+                    throw new RuntimeException(String.format(MessageConstants.PROFILE_NOT_FOUND, resourcePath));
                 }
                 return objectMapper.readValue(inputStream, Object.class);
             }
         } catch (Exception e) {
-            throw new RuntimeException(MessageConstants.ERROR_READING_PROFILE_FILE + ": " + profileName, e);
+            throw new RuntimeException(String.format(MessageConstants.ERROR_READING_PROFILE_FILE, profileName), e);
         }
     }
 
@@ -305,7 +305,7 @@ public class ProfileService {
                 return ProfilePathConstants.LAYERS_DIR + profileName +
                        ProfilePathConstants.JSON_EXTENSION;
             default:
-                throw new IllegalArgumentException(MessageConstants.ERROR_UNKNOWN_PROFILE_TYPE + profileType);
+                throw new IllegalArgumentException(String.format(MessageConstants.ERROR_UNKNOWN_PROFILE_TYPE, profileType));
         }
     }
 
@@ -360,7 +360,7 @@ public class ProfileService {
                         }
                         break;
                     default:
-                        throw new IllegalArgumentException(MessageConstants.ERROR_UNKNOWN_PROFILE_TYPE + profileType);
+                        throw new IllegalArgumentException(String.format(MessageConstants.ERROR_UNKNOWN_PROFILE_TYPE, profileType));
                 }
             }
         } catch (Exception e) {
@@ -385,7 +385,7 @@ public class ProfileService {
             case ProfileType.LAYER:
                 return getLayers();
             default:
-                throw new IllegalArgumentException(MessageConstants.ERROR_UNKNOWN_PROFILE_TYPE + profileType);
+                throw new IllegalArgumentException(String.format(MessageConstants.ERROR_UNKNOWN_PROFILE_TYPE, profileType));
         }
     }
 }

@@ -158,6 +158,14 @@ public final class OptimizerConstants {
         public static final String INFO_NO_LAYERS_FOUND = "No layers found in Kruize, returning empty list";
         public static final String INFO_LOADING_PROFILE_FROM = "Loading profile from: %s";
         public static final String WARN_CONFIGS_INDEX_NOT_FOUND = "configsReferenceIndex.json not found, returning empty list";
+        public static final String INFO_FETCHING_METADATA_PROFILES_LIST = "Fetching metadata profiles list";
+        public static final String INFO_FETCHING_METRIC_PROFILES_LIST = "Fetching metric profiles list";
+        public static final String INFO_INSTALLING_METADATA_PROFILES = "Installing missing metadata profiles";
+        public static final String INFO_INSTALLING_METRIC_PROFILES = "Installing missing metric profiles";
+        public static final String ERROR_FETCHING_METADATA_PROFILES = "Error fetching metadata profiles";
+        public static final String ERROR_FETCHING_METRIC_PROFILES = "Error fetching metric profiles";
+        public static final String ERROR_INSTALLING_METADATA_PROFILES = "Error installing metadata profiles";
+        public static final String ERROR_INSTALLING_METRIC_PROFILES = "Error installing metric profiles";
         public static final String INFO_FETCHING_JOBS_OVERVIEW = "Fetching jobs overview";
         public static final String INFO_INITIALIZING_BULK_SCHEDULER = "Initializing bulk scheduler...";
         public static final String INFO_BULK_SCHEDULER_INITIALIZED = "Bulk scheduler initialized successfully";

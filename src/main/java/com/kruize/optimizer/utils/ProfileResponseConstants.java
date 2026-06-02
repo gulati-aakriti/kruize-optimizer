@@ -30,5 +30,3 @@ public final class ProfileResponseConstants {
     public static final String NO_METRIC_PROFILES_FOUND_ERROR = "No metric profiles found!";
     public static final String NO_LAYERS_FOUND_ERROR = "No layers found!";
 }
-
-// Made with Bob

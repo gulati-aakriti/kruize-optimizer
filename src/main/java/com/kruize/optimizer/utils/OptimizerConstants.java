@@ -117,11 +117,6 @@ public final class OptimizerConstants {
         public static final String DATASOURCES_FETCHED_SUCCESS = "Datasources fetched successfully";
         public static final String PROFILES_FETCHED_SUCCESS = "Profiles fetched successfully";
         public static final String JOBS_OVERVIEW_FETCHED_SUCCESS = "Jobs overview fetched successfully";
-        public static final String PROFILE_INSTALLED_SUCCESS = "Successfully installed profile: %s";
-        public static final String PROFILE_INSTALL_RESULT_INSTALLED = "Installed: %s";
-        public static final String PROFILE_INSTALL_RESULT_ALREADY_INSTALLED = "Already installed: %s";
-        public static final String PROFILE_INSTALL_RESULT_FAILED = "Failed to install %s: %s";
-        public static final String PROFILE_INSTALL_RESULT_ERROR = "Error: %s";
 
         // Error messages
         public static final String ERROR_FETCHING_DATASOURCES = "Error fetching datasources from Kruize";
@@ -133,6 +128,10 @@ public final class OptimizerConstants {
         public static final String ERROR_FAILED_TO_INSTALL_PROFILE = "Failed to install profile: %s";
         public static final String ERROR_READING_CONFIGS_INDEX = "Error reading configsReferenceIndex.json";
         public static final String ERROR_UNKNOWN_PROFILE_TYPE = "Unknown profile type: %s";
+        public static final String ERROR_FETCHING_METADATA_PROFILES = "Error fetching metadata profiles";
+        public static final String ERROR_FETCHING_METRIC_PROFILES = "Error fetching metric profiles";
+        public static final String ERROR_INSTALLING_METADATA_PROFILES = "Error installing metadata profiles";
+        public static final String ERROR_INSTALLING_METRIC_PROFILES = "Error installing metric profiles";
         public static final String ERROR_FETCHING_JOBS_OVERVIEW = "Error fetching jobs overview";
         public static final String ERROR_PROCESSING_WEBHOOK = "Error processing webhook";
         public static final String ERROR_PROCESSING_WEBHOOK_WITH_MESSAGE = "Error processing webhook: %s";
@@ -151,6 +150,11 @@ public final class OptimizerConstants {
         public static final String ERROR_FAILED_TO_EXECUTE_SCHEDULED_BULK_API_CALL = "Failed to execute scheduled bulk API call";
 
         // Info messages
+        public static final String PROFILE_INSTALLED_SUCCESS = "Successfully installed profile: %s";
+        public static final String PROFILE_INSTALL_RESULT_INSTALLED = "Installed: %s";
+        public static final String PROFILE_INSTALL_RESULT_ALREADY_INSTALLED = "Already installed: %s";
+        public static final String PROFILE_INSTALL_RESULT_FAILED = "Failed to install %s: %s";
+        public static final String PROFILE_INSTALL_RESULT_ERROR = "Error: %s";
         public static final String NO_DATASOURCES_FOUND = "No datasources found";
         public static final String NO_PROFILES_FOUND = "No profiles found";
         public static final String PROFILE_ALREADY_EXISTS = "Profile already exists";
@@ -167,10 +171,6 @@ public final class OptimizerConstants {
         public static final String INFO_FETCHING_METRIC_PROFILES_LIST = "Fetching metric profiles list";
         public static final String INFO_INSTALLING_METADATA_PROFILES = "Installing missing metadata profiles";
         public static final String INFO_INSTALLING_METRIC_PROFILES = "Installing missing metric profiles";
-        public static final String ERROR_FETCHING_METADATA_PROFILES = "Error fetching metadata profiles";
-        public static final String ERROR_FETCHING_METRIC_PROFILES = "Error fetching metric profiles";
-        public static final String ERROR_INSTALLING_METADATA_PROFILES = "Error installing metadata profiles";
-        public static final String ERROR_INSTALLING_METRIC_PROFILES = "Error installing metric profiles";
         public static final String INFO_FETCHING_JOBS_OVERVIEW = "Fetching jobs overview";
         public static final String INFO_INITIALIZING_BULK_SCHEDULER = "Initializing bulk scheduler...";
         public static final String INFO_BULK_SCHEDULER_INITIALIZED = "Bulk scheduler initialized successfully";

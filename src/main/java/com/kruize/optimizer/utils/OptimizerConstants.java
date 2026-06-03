@@ -51,6 +51,11 @@ public final class OptimizerConstants {
         // bulk APIs
         public static final String BULK_ENDPOINT = "/bulk";
         public static final String JOB_ID = "job_id";
+
+        // APIs response 
+        public static final String KRUIZE_NO_METADATA_PROFILES_FOUND_ERROR = "No metadata profiles found!";
+        public static final String KRUIZE_NO_METRIC_PROFILES_FOUND_ERROR = "No metric profiles found!";
+        public static final String KRUIZE_NO_LAYERS_FOUND_ERROR = "No layers found!";
     }
 
     // contains constants for Optimizer Service API endpoints

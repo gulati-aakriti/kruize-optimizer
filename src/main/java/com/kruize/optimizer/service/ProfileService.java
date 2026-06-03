@@ -19,10 +19,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kruize.optimizer.client.KruizeClient;
 import com.kruize.optimizer.exception.KruizeServiceException;
 import com.kruize.optimizer.model.kruize.KruizeProfile;
+import com.kruize.optimizer.utils.OptimizerConstants.KruizeClientConstants;
 import com.kruize.optimizer.utils.OptimizerConstants.MessageConstants;
 import com.kruize.optimizer.utils.OptimizerConstants.ProfileType;
 import com.kruize.optimizer.utils.OptimizerConstants.ProfilePathConstants;
-import com.kruize.optimizer.utils.ProfileResponseConstants;
 import jakarta.ws.rs.core.Response;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -71,7 +71,7 @@ public class ProfileService {
             if (e.getResponse().getStatus() == 400) {
                 try {
                     String responseBody = e.getResponse().readEntity(String.class);
-                    if (responseBody != null && responseBody.contains(ProfileResponseConstants.NO_METADATA_PROFILES_FOUND_ERROR)) {
+                    if (responseBody != null && responseBody.contains(KruizeClientConstants.KRUIZE_NO_METADATA_PROFILES_FOUND_ERROR)) {
                         LOG.info(MessageConstants.INFO_NO_METADATA_PROFILES_FOUND);
                         return Collections.emptyList();
                     }
@@ -116,7 +116,7 @@ public class ProfileService {
             if (e.getResponse().getStatus() == 400) {
                 try {
                     String responseBody = e.getResponse().readEntity(String.class);
-                    if (responseBody != null && responseBody.contains(ProfileResponseConstants.NO_METRIC_PROFILES_FOUND_ERROR)) {
+                    if (responseBody != null && responseBody.contains(KruizeClientConstants.KRUIZE_NO_METRIC_PROFILES_FOUND_ERROR)) {
                         LOG.info(MessageConstants.INFO_NO_METRIC_PROFILES_FOUND);
                         return Collections.emptyList();
                     }
@@ -159,7 +159,7 @@ public class ProfileService {
             if (e.getResponse().getStatus() == 400) {
                 try {
                     String responseBody = e.getResponse().readEntity(String.class);
-                    if (responseBody != null && responseBody.contains(ProfileResponseConstants.NO_LAYERS_FOUND_ERROR)) {
+                    if (responseBody != null && responseBody.contains(KruizeClientConstants.KRUIZE_NO_LAYERS_FOUND_ERROR)) {
                         LOG.info(MessageConstants.INFO_NO_LAYERS_FOUND);
                         return Collections.emptyList();
                     }

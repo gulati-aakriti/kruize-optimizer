@@ -15,10 +15,8 @@
  *******************************************************************************/
 package com.kruize.optimizer.service;
 
-import com.kruize.optimizer.model.kruize.Datasource;
 import com.kruize.optimizer.model.kruize.KruizeProfile;
 import com.kruize.optimizer.model.kruize.KruizeStatus;
-import com.kruize.optimizer.utils.OptimizerConstants.MessageConstants;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jboss.logging.Logger;
@@ -42,65 +40,6 @@ public class StatusService {
 
     @Inject
     KruizeStateService kruizeStateService;
-
-    /**
-     * Get comprehensive Kruize system status
-     *
-     * @return KruizeStatus object with all details
-     */
-    public KruizeStatus getSystemStatus() {
-        KruizeStatus status = new KruizeStatus();
-
-        try {
-            // Refresh the global state cache
-            kruizeStateService.refreshState();
-
-            // Get datasources from cache
-            List<Datasource> datasources = kruizeStateService.getCachedDatasources();
-            status.setDatasources(new KruizeStatus.DatasourceStatus(
-                    datasources.size(),
-                    datasources
-            ));
-
-            // Get metadata profiles
-            List<KruizeProfile> metadataProfiles = profileService.getMetadataProfiles();
-            status.setMetadataProfiles(new KruizeStatus.ProfileStatus(
-                    convertToProfileInfo(metadataProfiles)
-            ));
-
-            // Get metric profiles
-            List<KruizeProfile> metricProfiles = profileService.getMetricProfiles();
-            status.setMetricProfiles(new KruizeStatus.ProfileStatus(
-                    convertToProfileInfo(metricProfiles)
-            ));
-
-            // Get layers
-            List<KruizeProfile> layers = profileService.getLayers();
-            status.setLayers(new KruizeStatus.ProfileStatus(
-                    convertToProfileInfo(layers)
-            ));
-
-            // Add alerts if any
-            if (datasources.isEmpty()) {
-                status.addAlert(MessageConstants.NO_DATASOURCES_FOUND);
-            }
-            if (metadataProfiles.isEmpty()) {
-                status.addAlert("No metadata profiles installed");
-            }
-            if (metricProfiles.isEmpty()) {
-                status.addAlert("No metric profiles installed");
-            }
-            if (layers.isEmpty()) {
-                status.addAlert("No layers installed");
-            }
-
-        } catch (Exception e) {
-            LOG.error("Error fetching system status", e);
-            status.addAlert("Error fetching system status: " + e.getMessage());
-        }
-
-        return status;
-    }
 
     /**
      * Convert KruizeProfile list to ProfileInfo list

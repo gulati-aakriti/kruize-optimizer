@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
  * Unit tests for ProfileService
  */
 @QuarkusTest
-class ProfileServiceTest {
+class ProfileServiceTest extends BaseServiceTest {
 
     @Inject
     ProfileService profileService;
@@ -48,12 +48,6 @@ class ProfileServiceTest {
     @InjectMock
     @RestClient
     KruizeClient kruizeClient;
-
-    @InjectMock
-    BulkSchedulerService bulkSchedulerService;
-
-    @InjectMock
-    KruizeStateService kruizeStateService;
 
     private List<KruizeProfile> mockMetadataProfilesList;
     private List<KruizeProfile> mockMetricProfilesList;
@@ -64,11 +58,8 @@ class ProfileServiceTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        Mockito.reset(kruizeClient, bulkSchedulerService, kruizeStateService);
-
-        // Mock the initialization to prevent startup from connecting to real Kruize
-        doNothing().when(bulkSchedulerService).initialize();
-        doNothing().when(kruizeStateService).refreshStateAndInstallProfiles();
+        super.setUpCommonMocks();
+        Mockito.reset(kruizeClient);
 
         // Load mock responses from JSON files
         mockMetadataProfilesList = MockResponseLoader.loadMockResponse("metadata_profile_list.json", new TypeReference<List<KruizeProfile>>() {});
@@ -130,6 +121,29 @@ class ProfileServiceTest {
         assertTrue(profiles.isEmpty());
         verify(kruizeClient, times(1)).getMetadataProfiles(true);
     }
+    /**
+     * Test getMetadataProfiles when Kruize returns a non-400 HTTP error
+     *
+     * Test Description: Verifies that when Kruize returns a 5xx error,
+     * the service treats it as a true error and throws KruizeServiceException.
+     *
+     * Expected Output:
+     * - KruizeServiceException is thrown
+     */
+    @Test
+    void testGetMetadataProfiles_Non400ClientWebApplicationException() {
+        // Arrange
+        Response mockResponse = Response.status(500)
+                .entity("Internal Server Error from Kruize")
+                .build();
+        ClientWebApplicationException exception = new ClientWebApplicationException(mockResponse);
+        when(kruizeClient.getMetadataProfiles(true)).thenThrow(exception);
+
+        // Act & Assert
+        assertThrows(KruizeServiceException.class, () -> profileService.getMetadataProfiles());
+        verify(kruizeClient, times(1)).getMetadataProfiles(true);
+    }
+
 
     /**
      * Test getMetadataProfiles when service throws exception

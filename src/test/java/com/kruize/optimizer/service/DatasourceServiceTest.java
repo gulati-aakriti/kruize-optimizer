@@ -38,7 +38,7 @@ import static org.mockito.Mockito.*;
  * Unit tests for DatasourceService
  */
 @QuarkusTest
-class DatasourceServiceTest {
+class DatasourceServiceTest extends BaseServiceTest {
 
     @Inject
     DatasourceService datasourceService;
@@ -47,22 +47,13 @@ class DatasourceServiceTest {
     @RestClient
     KruizeClient kruizeClient;
 
-    @InjectMock
-    BulkSchedulerService bulkSchedulerService;
-
-    @InjectMock
-    KruizeStateService kruizeStateService;
-
     private DatasourceListResponse mockDatasourceResponse;
     private DatasourceListResponse emptyDatasourceResponse;
 
     @BeforeEach
     void setUp() throws IOException {
-        Mockito.reset(kruizeClient, bulkSchedulerService, kruizeStateService);
-
-        // Mock the initialization to prevent startup from connecting to real Kruize
-        doNothing().when(bulkSchedulerService).initialize();
-        doNothing().when(kruizeStateService).refreshStateAndInstallProfiles();
+        super.setUpCommonMocks();
+        Mockito.reset(kruizeClient);
 
         // Load mock responses from JSON files
         mockDatasourceResponse = MockResponseLoader.loadMockResponse("datasource_list.json", DatasourceListResponse.class);
